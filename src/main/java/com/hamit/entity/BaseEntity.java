@@ -15,7 +15,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public abstract class BaseEntity implements Serializable {
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = -7461083849269769226L;
 	
 	@Column(name = "creation_date", updatable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
 	@Temporal(TemporalType.TIMESTAMP)
