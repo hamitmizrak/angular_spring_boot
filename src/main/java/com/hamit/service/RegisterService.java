@@ -14,17 +14,18 @@ public interface RegisterService {
 	// GET ==> multiple select * from ;
 	public List<RegisterDto> getAllList();
 	
+	// DML
 	// POST ==> insert register (register_name) values ("Deneme")
-	public RegisterDto getPost(RegisterDto dto);
+	public void getPost(RegisterDto dto);
 	
 	// UPDATE ==> update `angular_springboot`.`register` set `register_name` =
 	// 'Deneme44' WHERE (`register_id` = '5');
-	public RegisterDto getUpdate(int id, RegisterDto dto);
+	public void getUpdate(int id, RegisterDto dto);
 	
 	// DELETE ==> delete from register where register_id=4
-	public RegisterDto getDelete(int id);
+	public void getDelete(int id);
 	
 	// DELETE ==> delete from register
-	public RegisterDto getDeleteAll();
+	public void getDeleteAll();
 	
 }

@@ -11,6 +11,9 @@ import com.hamit.entity.RegisterEntity;
 import com.hamit.repository.RegisterRepository;
 import com.hamit.service.RegisterService;
 
+import lombok.extern.java.Log;
+
+@Log
 public class RegisterServiceImpl implements RegisterService {
 	
 	@Autowired
@@ -21,8 +24,15 @@ public class RegisterServiceImpl implements RegisterService {
 	
 	@Override
 	public RegisterDto getById(int id) {
-		@SuppressWarnings("deprecation")
-		RegisterEntity entity = registerRepository.getOne(id);
+		RegisterEntity entity = null;
+		try {
+			entity = registerRepository.getOne(id);
+			log.info(RegisterDto.class + " id: " + id + " çağrıldı");
+		} catch (Exception e) {
+			e.printStackTrace();
+			log.warning(RegisterDto.class + " id: " + id + " çağrılmadı");
+		}
+		
 		return modelMapper.map(entity, RegisterDto.class);
 	}
 	
@@ -30,45 +40,71 @@ public class RegisterServiceImpl implements RegisterService {
 	public List<RegisterDto> getAllList() {
 		List<RegisterEntity> entityList = new ArrayList<RegisterEntity>();
 		List<RegisterDto> dtoList = new ArrayList<RegisterDto>();
-		entityList.forEach(entity -> dtoList.add(modelMapper.map(entity, RegisterDto.class)));
+		try {
+			entityList.forEach(entity -> dtoList.add(modelMapper.map(entity, RegisterDto.class)));
+			log.info(RegisterDto.class + " listelendi");
+		} catch (Exception e) {
+			e.printStackTrace();
+			log.warning(RegisterDto.class + " Listelenmedi");
+		}
+		
 		return dtoList;
 	}
 	
 	// güncelleme ve ekleme için save kullanıyoruz.
 	// 2 tane modelMapper işlemi yaptım
 	@Override
-	public RegisterDto getPost(RegisterDto dto) {
-		RegisterEntity entity = modelMapper.map(dto, RegisterEntity.class);
-		registerRepository.save(entity);
-		return modelMapper.map(entity, RegisterDto.class);
+	public void getPost(RegisterDto dto) {
+		try {
+			RegisterEntity entity = modelMapper.map(dto, RegisterEntity.class);
+			registerRepository.save(entity);
+			log.info(RegisterDto.class + " eklendi");
+			// return modelMapper.map(entity, RegisterDto.class);
+		} catch (Exception e) {
+			e.printStackTrace();
+			log.warning(RegisterDto.class + " eklenmedi");
+		}
 	}
 	
 	// void kullanamabiliriz.
 	// güncelleme ve ekleme için save kullanıyoruz.
 	@Override
-	public RegisterDto getUpdate(int id, RegisterDto dto) {
-		@SuppressWarnings("deprecation")
-		RegisterEntity find = registerRepository.getOne(id);
-		find.setRegisterName(dto.getRegisterName());
-		find.setRegisterSurname(dto.getRegisterSurname());
-		find.setRegisterPassword(dto.getRegisterPassword());
-		find.setRegisterEmail(dto.getRegisterEmail());
-		registerRepository.save(find);
-		return modelMapper.map(find, RegisterDto.class);
+	public void getUpdate(int id, RegisterDto dto) {
+		try {
+			RegisterEntity find = registerRepository.getOne(id);
+			find.setRegisterName(dto.getRegisterName());
+			find.setRegisterSurname(dto.getRegisterSurname());
+			find.setRegisterPassword(dto.getRegisterPassword());
+			find.setRegisterEmail(dto.getRegisterEmail());
+			registerRepository.save(find);
+			log.info(RegisterDto.class + " kayıt edildi");
+			// return modelMapper.map(find, RegisterDto.class);
+		} catch (Exception e) {
+			e.printStackTrace();
+			log.warning(RegisterDto.class + " kayıt edilmedi");
+		}
 	}
 	
 	@Override
-	public RegisterDto getDelete(int id) {
-		registerRepository.deleteById(id);
-		RegisterDto dto = new RegisterDto();
-		dto.setRegisterId(id);
-		return dto;
+	public void getDelete(int id) {
+		try {
+			registerRepository.deleteById(id);
+			log.info(RegisterDto.class + "id: " + id + " kayıt silindi");
+		} catch (Exception e) {
+			e.printStackTrace();
+			log.warning(RegisterDto.class + "id: " + id + "  kayıt silinmedi");
+		}
 	}
 	
 	@Override
-	public RegisterDto getDeleteAll() {
-		registerRepository.deleteAll();
-		return null;
+	public void getDeleteAll() {
+		try {
+			registerRepository.deleteAll();
+			log.info(RegisterDto.class + " kayıtlar silindi");
+		} catch (Exception e) {
+			e.printStackTrace();
+			log.warning(RegisterDto.class + "kayıtlar silinmedi");
+		}
 	}
 	
 }
