@@ -1,5 +1,7 @@
 package com.hamit.api.impl;
 
+import java.util.List;
+
 import org.springframework.http.ResponseEntity;
 
 import com.hamit.api.RegisterApi;
@@ -15,7 +17,7 @@ public class RegisterApiImpl implements RegisterApi<RegisterDto> {
 	}
 	
 	@Override
-	public ResponseEntity<RegisterDto> getAllList() {
+	public ResponseEntity<List<RegisterDto>> getAllList() {
 		// TODO Auto-generated method stub
 		return null;
 	}

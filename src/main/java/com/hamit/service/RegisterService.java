@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.hamit.dto.RegisterDto;
 
-public interface RegiterService {
+public interface RegisterService {
 	
 	// CRUD
 	
@@ -17,13 +17,14 @@ public interface RegiterService {
 	// POST ==> insert register (register_name) values ("Deneme")
 	public RegisterDto getPost(RegisterDto dto);
 	
+	// UPDATE ==> update `angular_springboot`.`register` set `register_name` =
+	// 'Deneme44' WHERE (`register_id` = '5');
+	public RegisterDto getUpdate(int id, RegisterDto dto);
+	
 	// DELETE ==> delete from register where register_id=4
 	public RegisterDto getDelete(int id);
 	
 	// DELETE ==> delete from register
 	public RegisterDto getDeleteAll();
 	
-	// UPDATE ==> update `angular_springboot`.`register` set `register_name` =
-	// 'Deneme44' WHERE (`register_id` = '5');
-	public RegisterDto getUpdate(int id, RegisterDto dto);
 }
