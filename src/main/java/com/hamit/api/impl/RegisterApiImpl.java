@@ -18,11 +18,19 @@ import com.hamit.api.RegisterApi;
 import com.hamit.dto.RegisterDto;
 import com.hamit.service.impl.RegisterServiceImpl;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.extern.java.Log;
 
+// rest
 @RestController
 @RequestMapping(value = "/api/register")
+
+// lombok
 @Log
+
+// swagger-2
+@Api(value = "/api/register")
 public class RegisterApiImpl implements RegisterApi<RegisterDto> {
 	
 	// rest
@@ -41,7 +49,8 @@ public class RegisterApiImpl implements RegisterApi<RegisterDto> {
 	// }
 	
 	// localhost:9293/api/register/get/1
-	@GetMapping("/get/{id44}")
+	@GetMapping("/get/{id44}") // rest
+	@ApiOperation(value = "get By Id", notes = "tek sonuc", response = RegisterDto.class) // swagger
 	@Override
 	public ResponseEntity<RegisterDto> getById(@PathVariable("id44") int id) {
 		RegisterDto dto = registerServiceImp.getById(id);
@@ -51,6 +60,7 @@ public class RegisterApiImpl implements RegisterApi<RegisterDto> {
 	
 	// localhost:9293/api/register/get/list
 	@GetMapping("/get/list")
+	@ApiOperation(value = "get By List", notes = "coklu sonuc", response = RegisterDto.class)
 	@Override
 	public ResponseEntity<List<RegisterDto>> getAllList() {
 		return ResponseEntity.ok(registerServiceImp.getAllList());
@@ -58,6 +68,7 @@ public class RegisterApiImpl implements RegisterApi<RegisterDto> {
 	
 	// localhost:9293/api/register/post
 	@PostMapping("/post")
+	@ApiOperation(value = "post", notes = "ekleme alanı", response = RegisterDto.class)
 	@Override
 	public ResponseEntity<RegisterDto> getPost(@ModelAttribute RegisterDto dto) {
 		log.info(RegisterDto.class + " Api Eklendi dönüldü");
@@ -66,6 +77,7 @@ public class RegisterApiImpl implements RegisterApi<RegisterDto> {
 	
 	// localhost:9293/api/register/delete/1
 	@DeleteMapping("/delete/{id44}")
+	@ApiOperation(value = "delete By Id ", notes = "silme alanı", response = RegisterDto.class)
 	@Override
 	public ResponseEntity<RegisterDto> getDelete(@PathVariable("id44") int id) {
 		registerServiceImp.getDelete(id);
@@ -74,6 +86,7 @@ public class RegisterApiImpl implements RegisterApi<RegisterDto> {
 	
 	// localhost:9293/api/register/delete
 	@DeleteMapping("/delete")
+	@ApiOperation(value = "delete All ", notes = "silme alanı", response = RegisterDto.class)
 	@Override
 	public ResponseEntity<RegisterDto> getDeleteAll() {
 		registerServiceImp.getDeleteAll();
@@ -83,6 +96,7 @@ public class RegisterApiImpl implements RegisterApi<RegisterDto> {
 	
 	// localhost:9293/api/register/update/1
 	@PutMapping("/update/{id44}")
+	@ApiOperation(value = "update By Id  ", notes = "güncelleme alanı", response = RegisterDto.class)
 	@Override
 	public ResponseEntity<RegisterDto> getUpdate(@PathVariable("id44") int id, @ModelAttribute RegisterDto dto) {
 		registerServiceImp.getUpdate(id, dto);
