@@ -73,6 +73,7 @@ public class RegisterApiImpl implements RegisterApi<RegisterDto> {
 	}
 	
 	// localhost:9293/api/register/delete
+	@DeleteMapping("/delete")
 	@Override
 	public ResponseEntity<RegisterDto> getDeleteAll() {
 		registerServiceImp.getDeleteAll();

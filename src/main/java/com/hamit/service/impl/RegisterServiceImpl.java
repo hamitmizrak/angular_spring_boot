@@ -2,6 +2,7 @@ package com.hamit.service.impl;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,17 +39,18 @@ public class RegisterServiceImpl implements RegisterService {
 		return modelMapper.map(entity, RegisterDto.class);
 	}
 	
+	<S, T> List<T> modelMapList(List<S> source, Class<T> targetClass) {
+		return source.stream().map(item -> modelMapper.map(item, targetClass)).collect(Collectors.toList());
+	}
+	
 	@Override
 	public List<RegisterDto> getAllList() {
 		List<RegisterEntity> entityList = new ArrayList<RegisterEntity>();
-		List<RegisterDto> dtoList = new ArrayList<RegisterDto>();
-		try {
-			entityList.forEach(entity -> dtoList.add(modelMapper.map(entity, RegisterDto.class)));
-			log.info(RegisterDto.class + " listelendi");
-		} catch (Exception e) {
-			e.printStackTrace();
-			log.warning(RegisterDto.class + " Listelenmedi");
-		}
+		registerRepository.findAll().forEach(entityList::add);
+		List<RegisterDto> dtoList = modelMapList(entityList, RegisterDto.class);
+		// entityList.forEach(entity -> dtoList.add(modelMapper.map(entity,
+		// RegisterDto.class)));
+		log.info(RegisterDto.class + " listelendi");
 		
 		return dtoList;
 	}
@@ -57,16 +59,10 @@ public class RegisterServiceImpl implements RegisterService {
 	// 2 tane modelMapper işlemi yaptım
 	@Override
 	public RegisterDto getPost(RegisterDto dto) {
-		RegisterEntity entity = null;
-		try {
-			entity = modelMapper.map(dto, RegisterEntity.class);
-			registerRepository.save(entity);
-			log.info(RegisterDto.class + " eklendi");
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-			log.warning(RegisterDto.class + " eklenmedi");
-		}
+		RegisterEntity entity = modelMapper.map(dto, RegisterEntity.class);
+		registerRepository.save(entity);
+		log.info(RegisterDto.class + " eklendi");
+		
 		return modelMapper.map(entity, RegisterDto.class);
 	}
 	

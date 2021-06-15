@@ -4,9 +4,7 @@ import java.util.List;
 
 import org.springframework.http.ResponseEntity;
 
-import com.hamit.dto.RegisterDto;
-
-public interface RegisterApi<T> {
+public interface RegisterApi<RegisterDto> {
 	
 	// CRUD
 	
@@ -17,7 +15,7 @@ public interface RegisterApi<T> {
 	public ResponseEntity<List<RegisterDto>> getAllList();
 	
 	// POST ==> insert register (register_name) values ("Deneme")
-	public ResponseEntity<RegisterDto> getPost(T dto);
+	public ResponseEntity<RegisterDto> getPost(RegisterDto dto);
 	
 	// DELETE ==> delete from register where register_id=4
 	public ResponseEntity<RegisterDto> getDelete(int id);
