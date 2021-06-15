@@ -10,6 +10,7 @@ import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
 import springfox.documentation.service.ApiInfo;
+import springfox.documentation.service.Contact;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
@@ -25,8 +26,8 @@ public class Swagger2Config {
 		return new ApiInfoBuilder().title("title:Hamit Mızrak 15 Haziran 2021")
 				.description("description:Angular Spring Boot").termsOfServiceUrl("http://www.hamitmizrak.com.tr")
 				.license("license:for Java Angular HamitMizrak")
-				// .contact(+90 1111 222 333)
-				.version("1.0.0").build();
+				.contact(new Contact("Hamit", "http://www.hamitmizrak.com", "hamitmizrak@gmail.com")).version("1.0.0")
+				.build();
 	}
 	
 	@Bean
