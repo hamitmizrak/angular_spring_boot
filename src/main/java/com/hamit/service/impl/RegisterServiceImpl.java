@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.hamit.dto.RegisterDto;
 import com.hamit.entity.RegisterEntity;
@@ -14,6 +15,7 @@ import com.hamit.service.RegisterService;
 import lombok.extern.java.Log;
 
 @Log
+@Service
 public class RegisterServiceImpl implements RegisterService {
 	
 	@Autowired
@@ -54,16 +56,18 @@ public class RegisterServiceImpl implements RegisterService {
 	// güncelleme ve ekleme için save kullanıyoruz.
 	// 2 tane modelMapper işlemi yaptım
 	@Override
-	public void getPost(RegisterDto dto) {
+	public RegisterDto getPost(RegisterDto dto) {
+		RegisterEntity entity = null;
 		try {
-			RegisterEntity entity = modelMapper.map(dto, RegisterEntity.class);
+			entity = modelMapper.map(dto, RegisterEntity.class);
 			registerRepository.save(entity);
 			log.info(RegisterDto.class + " eklendi");
-			// return modelMapper.map(entity, RegisterDto.class);
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 			log.warning(RegisterDto.class + " eklenmedi");
 		}
+		return modelMapper.map(entity, RegisterDto.class);
 	}
 	
 	// void kullanamabiliriz.

@@ -2,8 +2,11 @@ package com.hamit.service;
 
 import java.util.List;
 
+import org.springframework.stereotype.Service;
+
 import com.hamit.dto.RegisterDto;
 
+@Service
 public interface RegisterService {
 	
 	// CRUD
@@ -16,7 +19,7 @@ public interface RegisterService {
 	
 	// DML
 	// POST ==> insert register (register_name) values ("Deneme")
-	public void getPost(RegisterDto dto);
+	public RegisterDto getPost(RegisterDto dto);
 	
 	// UPDATE ==> update `angular_springboot`.`register` set `register_name` =
 	// 'Deneme44' WHERE (`register_id` = '5');

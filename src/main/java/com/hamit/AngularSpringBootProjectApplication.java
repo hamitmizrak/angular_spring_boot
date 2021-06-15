@@ -6,6 +6,11 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
 @SpringBootApplication
+// @SpringBootApplication(scanBasePackages = { "com.hamit.service",
+// "com.hamit.service.impl" })
+// @ComponentScan(basePackages = { "com.hamit.service", "com.hamit.service.impl"
+// })
+
 public class AngularSpringBootProjectApplication {
 	
 	// psvm
