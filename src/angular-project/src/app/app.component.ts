@@ -1,3 +1,4 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 declare let alertify: any; //alertify
 
@@ -18,9 +19,9 @@ export class AppComponent implements OnInit {
   $('#jQuery_button').click(function () {
     alertify.success("Jquery Çalışıyor");
     $('#jQuery_h1').css("color","red")
-  });*/
-  
-}
+  });
+  */
+  }
 
   //jQuery Click
   jQueryClickExamples() {
@@ -33,4 +34,23 @@ export class AppComponent implements OnInit {
   success() {
     alertify.error('oldu');
   }
+
+  //datatables
+  data:any;
+  constructor(private http: HttpClient){
+      //get request from web api
+      this.http.get('https://www.testjsonapi.com/users/').subscribe(data => {
+      
+        this.data = data;
+      setTimeout(()=>{   
+        $('#datatableexample').DataTable( {
+          pagingType: 'full_numbers',
+          pageLength: 5,
+          processing: true,
+          lengthMenu : [5, 10, 25]
+      } );
+      }, 1);
+            }, error => console.error(error));
+    }
+    
 }
