@@ -1,0 +1,478 @@
+------------------------------------------------------ JPA implementasyonlar ---------------------------------------
+Hibernate
+EclipseLink
+DataNucleus
+Dipnot:Jpa tek başına bir anlam ifade etmez bunun için İmplementasyona gerek vardır.
+
+------------------------------------------------------ persistence.xml (META-INF) ---------------------------------------
+<persist name="persistenceUnitNameHamit">
+<properties>
+
+------------------------------------------------------ Pom.xml -------------------------------------------------
+<dependency>
+	<groupId>org.hibernate</groupId>
+	<artifactId>hibernate-core</arfifactId>
+	<version>8.0.19</version>
+<dependency>
+
+------------------------------------------------------ ORM Avantajları -------------------------------------------------
+Veritabanı bağımsızlığını sağlamak
+Transcation
+Caching
+
+------------------------------------------------------ Hibernate(JPA) -------------------------------------------------
+implements Seriazable
+equalsHashCode
+Entity Class
+Dto Class
+
+------------------------------------------------------ TERİMLER --------------------------------------------------------
+ORM:Object toRelational Mapping
+JDBC:Java Database Connectivity
+RDBMS:Relation Database Management System
+JPA:Java Persisitence  API (Persistence kütüphanesi)
+API:Application Programming Interface
+XML:eXtensible Markup Language
+JPQL: Java Platform Enterprice Edition
+
+------------------------------------------------------ DATE -----------------------------------------------------------------
+@CreationTimestamp
+@Temporal(TemporalType.TIMESTAMP)
+private Date date;
+
+
+
+------------------------------------------------------ ENTITY ----------------------------------------------------------------
+@Entity 
+@Table(name="student")
+
+@Id 
+@GeneratedValue(strategy=GenerationType.IDENTITY)
+
+
+------------------------------------------------------ CRUD ----------------------------------------------------------------
+Create ==>  persist
+Delete ==>  remove
+Update ==>  merge
+Read   ==>  select
+find   ==>  find
+
+
+------------------------------------------------------ TRANSACTION ----------------------------------------------------------------
+100 % kesin olmadan gerçekleşmeyen sistemler bütünüdür.
+
+
+-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ ---
+
+------------------MANIPULASYON VAR------------------------ CRUD (CREATE)==> (persist) -------------------------------------------------
+@Log
+public class CreateHibernate{
+
+
+public void createPersistMethod(Student student){
+
+EntityManagerFactory factory=Persistence.createEntityManagerFactory("persistenceUnitNameHamit");
+EntityManager entityManager=factory.createEntityManager();
+
+entityManager.getTransaction().begin();
+entityManager.persist(student);
+entityManager.getTransaction().commit();
+entityManager.close();
+
+sout("başarılı eklendi");
+log.info("başarılı eklendi"+" ");
+}
+
+
+psvm{
+CreateHibernate create=new CreateHibernate();
+Student student=new Student(100,"Hamit","Mizrak");
+create.createPersistMethod(student);
+}
+
+
+-----------------MANIPULASYON YOK-------------------- CRUD (FIND)==> (find) -------------------------------------------------
+public Student findMethod(Long id){
+EntityManagerFactory factory=Persistence.createEntityManagerFactory("persistenceUnitNameHamit");
+EntityManager entityManager=factory.createEntityManager();
+
+Student student=entityManager.find(Student.class,id);
+entityManager.close();
+
+return student;
+}
+
+
+psvm{
+CreateHibernate find=new CreateHibernate();
+Student student=find.findMethod(4)
+sout(student);
+}
+
+7777711122255------------------------------------------- STUDENT------------------------------------------------------------------
+public Student {
+private Long studentId;
+private String studentName;
+private String studentSurname;
+
+//getter setter
+//parametresiz cons
+//parametreli
+//equalsHashCode
+//toString
+
+}
+
+-----------------MANIPULASYON VAR------------------------- CRUD (DELETE)==> (remove) -------------------------------------------------
+
+public void deleteMethod(Long id){
+EntityManagerFactory factory=Persistence.createEntityManagerFactory("persistenceUnitNameHamit");
+EntityManager entityManager=factory.createEntityManager();
+
+Student student=entityManager.find(Student.class,id);
+
+entityManager.getTransaction().begin();
+entityManager.remove(student);
+entityManager.getTransaction().commit();
+entityManager.close();
+sout("başarılı silindi"+student.class);
+}
+
+
+psvm{
+CreateHibernate delete444=new CreateHibernate();
+delete444.deleteMethod(5);
+}
+
+
+
+------------------MANIPULASYON VAR --------------------------- CRUD (UPDATE)==> (merge) -------------------------------------------------
+public void updateMethod(Long id,Student student){
+EntityManagerFactory factory=Persistence.createEntityManagerFactory("persistenceUnitNameHamit");
+EntityManager entityManager=factory.createEntityManager();
+
+entityManager.getTransaction().begin();
+
+Student student2=entityManager.find(Student.class,id);
+student2.setName(student.getName());
+student2.setSurname(student.getName());
+
+entityManager.merge(student2);
+entityManager.getTransaction().commit();
+entityManager.close();
+
+}
+
+psvm{
+CreateHibernate delete444=new CreateHibernate();
+
+Student studentMain=new Student();
+studentMain.setName("Hamit");
+studentMain.setSurname("Mızrak");
+
+delete444.updateMethod(4,studentMain);
+sout("başarılı güncellendi");
+}
+
+
+------------------MANIPULASYON YOK------------------------ CRUD (SELECT)==> (select) => getSingleResult ----------------------------------------------
+public Student singleResult(Long id){
+EntityManagerFactory factory=Persistence.createEntityManagerFactory("persistenceUnitNameHamit");
+EntityManager entityManager=factory.createEntityManager();
+
+           //select   *   from  book    as  book   where book.book_id=4;
+String jpql="select  str  from  Student as  str    where str.studentId>:key";
+TypedQuery<Student> query=entityManager.createQuery(jpql,Student.class);
+query.setParameter("key",4L);
+Student str=  query.getSingleResult();
+sout(str)
+
+}
+
+
+------------------MANIPULASYON YOK------------------------ CRUD (SELECT)==> (select) => getResultListResult ----------------------------------------------
+public Student singleResult(){
+EntityManagerFactory factory=Persistence.createEntityManagerFactory("persistenceUnitNameHamit");
+EntityManager entityManager=factory.createEntityManager();
+
+           //select   *   from  book    as  book ;
+String jpql="select  str  from  Student as  str ";
+TypedQuery<Student> query=entityManager.createQuery(jpql,Student.class);
+ArrayList<Student> listem=(ArrayList<Student>)query.getResultList();
+
+for(Student temp: str)
+sout(temp);
+}
+
+-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ ---
+------------------------------------------------------ Anotation Java 1.5   -----------------------------------------------------------
+@Entity 
+@Table 
+@Id 
+@GeneratedValue 
+@SequenceGenerated
+@Column 
+@Temporal 
+@CreationTimestamp
+@Lob 
+@Transient
+@Version
+@Enumarated ==> enum 
+@MappedSuperClass ==> kalıtım 
+
+------------------------------------------------------ @Entity  -----------------------------------------------------------
+@Entity ==> Java classlarımızı DB eşleme işlemini yapıyor.
+
+------------------------------------------------------ @Table  -----------------------------------------------------------
+@Table (name="student")
+name 
+catalog 
+schema
+indexes
+uniqueContraints
+
+
+------------------------------------------------------ @Id  -----------------------------------------------------------
+@Id ==>   primary Key (unique)
+
+------------------------------------------------------ @GeneratedValue  -----------------------------------------------------------
+@GeneratedValue ==>   primary Key (unique)
+@GeneratedValue(strategy=IDENTITY)
+
+
+------------------------------------------------------ @SequenceGenerator  -----------------------------------------------------------
+@GeneratedValue ==>   primary Key (unique)
+@GeneratedValue(strategy=GenerationType.SEQUENCE,generator="malatya")
+
+
+------------------------------------------------------ @column  -----------------------------------------------------------
+@column(name="book_type",length=10,updatable=false,insertable=false,precision=12,scale=5,nullable=false)
+
+
+------------------------------------------------------ @Embedded  -----------------------------------------------------------
+@Entity 
+@Table
+public class GenelUlke{
+@Column(name="adi")
+private String name;
+
+@Embedded
+private Iller il;
+}
+
+
+@Embeddable
+public class Iller {
+@Column(name="il_adi")
+private String ilAdi;
+
+@Column(name="il_adres")
+private String ilAdres;
+}
+
+
+------------------------------------------------------------------------------------------------------------------------
+C3PO
+
+------------------------------------------------------ @Transient -----------------------------------------------------------
+
+Javada bu özellik olsun ancak database bir karşılığı olmasın.
+
+@Transient
+private boolean result;
+
+------------------------------------------------------ @Version -----------------------------------------------------------
+transaction +transaction +transaction +transaction +transaction +transaction +transaction +transaction +transaction +transaction +transaction +
+
+@Version 
+private Long version;
+
+------------------------------------------------------ @Lob -----------------------------------------------------------
+
+@Lob
+private byte [] byteDizi;
+
+@Lob 
+private char [] charDizi;
+
+@Lob 
+private String cumle;
+
+
+------------------------------------------------------ @Temporal -----------------------------------------------------------
+@Temporal(TemporalType.TIMESTAMP)
+privata java.util.Date date;
+
+-------------------------------------------------------- Cache -----------------------------------
+1.Level=Tek kişi için olur
+2.Level=Bütün kullanıcılar için olur (ehcache)
+
+------------------------------------------------------ Singleton design pattern (SessionFactory) -----------------------------------------------------------
+public class TekHibernateClass {
+
+private static final SessionFactory sessionFactory=sessionHibernate();
+
+
+private static SessionFactory sessionHibernate(){
+
+try{
+Configuration configuration=new Configuration();
+
+configuration.addAnnotedClass(Student.class);
+configuration.addAnnotedClass(Teacher.class);
+
+SessionFactory sessionFactory=configuration.configure("hibernate.cfg.xml").buildSessionFactory();
+return sessionFactory;
+
+}catch(Exception e){
+e.printStackTrace();
+}
+
+return null;
+
+}
+
+public static SessionFactory getSessionFactory(){
+return sessionFactory;
+}
+
+
+}
+
+--- //////////////////////////////////////////////////////İLİŞKİLER//////////////////////////////////////////////////////// -----------------
+------------------------------------------------------ @OneToOne  -----------------------------------------------------------
+1 tabloda özellikler 6 tane 20 tane özelliği
+
+------------------------------------------------------ @OneToMany  -----------------------------------------------------------
+
+
+------------------------------------------------------ @ManyToOne  -----------------------------------------------------------
+
+
+------------------------------------------------------ @ManyToMany  -----------------------------------------------------------
+
+
+
+------------------------------------------------------ StudentEntity  -----------------------------------------------------------
+
+package com.hamit.entity;
+
+import java.io.Serializable;
+import java.util.Date;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
+import org.hibernate.annotations.CreationTimestamp;
+
+import lombok.Data;
+
+@Entity
+@Table(name = "student")
+@Data
+// N
+public class StudentEntity implements Serializable {
+	private static final long serialVersionUID = 7825754325361673295L;
+	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "student_id")
+	private Long studentId;
+	
+	@Column(name = "student_name")
+	private String studentName;
+	
+	@Column(name = "student_surname")
+	private String studentSurname;
+	
+	@Temporal(TemporalType.TIMESTAMP)
+	@CreationTimestamp
+	private Date date;
+	
+	// composition
+	@ManyToOne
+	@JoinColumn(name = "teacher_id")
+	private TeachertEntity teachertEntity;
+	
+}
+
+
+
+------------------------------------------------------ TeacherEntity  -----------------------------------------------------------
+
+package com.hamit.entity;
+
+import java.io.Serializable;
+import java.util.Date;
+import java.util.List;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
+import org.hibernate.annotations.CreationTimestamp;
+
+import lombok.Data;
+
+@Entity
+@Table(name = "teacher")
+@Data
+// 1
+public class TeachertEntity implements Serializable {
+	private static final long serialVersionUID = 7825754325361673295L;
+	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "teacher_id")
+	private Long teacherId;
+	
+	@Column(name = "teacher_name")
+	private String teacherName;
+	
+	@Column(name = "teacher_surname")
+	private String teacherSurname;
+	
+	@Temporal(TemporalType.TIMESTAMP)
+	@CreationTimestamp
+	private Date date;
+	
+	// composition
+	@OneToMany(mappedBy = "teachertEntity", fetch = FetchType.LAZY, cascade = CascadeType.ALL, targetEntity = StudentEntity.class)
+	List<StudentEntity> studentEntityList;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
