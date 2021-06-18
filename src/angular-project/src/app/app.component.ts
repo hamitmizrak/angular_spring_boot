@@ -1,3 +1,4 @@
+import { ToastrService } from 'ngx-toastr';
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 declare let alertify: any; //alertify
@@ -47,9 +48,16 @@ export class AppComponent implements OnInit {
     alertify.error('oldu');
   }
 
+  toascrShowSuccess() {
+    this.toastr.success('Başlık', 'İçerikler');
+    this.toastr.info('Başlık', 'İçerikler');
+    this.toastr.warning('Başlık', 'İçerikler');
+    this.toastr.error('Başlık', 'İçerikler');
+  }
+
   //datatables
   data: any;
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private toastr: ToastrService) {
     //get request from web api
     this.http.get('https://www.testjsonapi.com/users/').subscribe(
       (data) => {
