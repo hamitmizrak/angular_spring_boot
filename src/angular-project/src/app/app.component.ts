@@ -13,6 +13,18 @@ declare let jQuery: any; //jQuery
 export class AppComponent implements OnInit {
   title = 'angular-project';
 
+  isLoading: boolean = false;
+  //downloading spinner
+  //downloadingSpinner(){}
+  downloadingSpinner = () => {
+    this.isLoading = true;
+
+    //zaman
+    setTimeout(() => {
+      this.isLoading = false;
+    }, 4000);
+  };
+
   ngOnInit(): void {
     /*
     //jQuery
@@ -36,21 +48,22 @@ export class AppComponent implements OnInit {
   }
 
   //datatables
-  data:any;
-  constructor(private http: HttpClient){
-      //get request from web api
-      this.http.get('https://www.testjsonapi.com/users/').subscribe(data => {
-      
-        this.data = data;
-      setTimeout(()=>{   
-        $('#datatableexample').DataTable( {
-          pagingType: 'full_numbers',
-          pageLength: 5,
-          processing: true,
-          lengthMenu : [5, 10, 25]
-      } );
-      }, 1);
-            }, error => console.error(error));
-    }
-    
+  data: any;
+  constructor(private http: HttpClient) {
+    //get request from web api
+    this.http.get('https://www.testjsonapi.com/users/').subscribe(
+      (data) => {
+        this.data = data;
+        setTimeout(() => {
+          $('#datatableexample').DataTable({
+            pagingType: 'full_numbers',
+            pageLength: 5,
+            processing: true,
+            lengthMenu: [5, 10, 25],
+          });
+        }, 1);
+      },
+      (error) => console.error(error)
+    );
+  }
 }
