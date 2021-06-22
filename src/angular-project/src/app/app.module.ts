@@ -9,9 +9,21 @@ import { ToastrModule, ToastrService } from 'ngx-toastr';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { AnadizinComponent } from './anadizin/anadizin.component';
+import { PagenotfoundComponent } from './pagenotfound/pagenotfound.component';
+import { AboutComponent } from './about/about.component';
+import { LoginComponent } from './account/login/login.component';
+import { RegisterComponent } from './account/register/register.component';
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [
+    AppComponent,
+    AnadizinComponent,
+    PagenotfoundComponent,
+    AboutComponent,
+    LoginComponent,
+    RegisterComponent,
+  ],
   imports: [
     BrowserModule,
     AppRoutingModule, //routing
@@ -19,13 +31,12 @@ import { AppComponent } from './app.component';
     HttpClientModule, //Http
     BrowserAnimationsModule, // required animations module
     ToastrModule.forRoot({
-      timeOut:3000,
-      progressBar:true,
-      progressAnimation:'increasing',
-      closeButton:true,
+      timeOut: 3000,
+      progressBar: true,
+      progressAnimation: 'increasing',
+      closeButton: true,
       //"positionClass": "toast-bottom-left",
-      "positionClass": "toast-top-right"
-
+      positionClass: 'toast-top-right',
     }), // ToastrModule added
   ],
   providers: [],
