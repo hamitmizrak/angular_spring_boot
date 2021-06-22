@@ -7,4 +7,5 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'angular-project';
+  welcome:string="Merhabalar Hamit Mızrak";
 }

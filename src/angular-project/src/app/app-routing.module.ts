@@ -11,7 +11,6 @@ const routes: Routes = [
   { path: '', redirectTo: 'anadizin', pathMatch: 'full' },
   { path: 'about', component: AboutComponent },
   //{ path: '**', component: PagenotfoundComponent },
-
   {
     path: 'create',
     children: [
@@ -19,6 +18,9 @@ const routes: Routes = [
       { path: 'register', component: RegisterComponent },
     ],
   },
+
+  {path:'iletisim',loadChildren:()=> import('./blog/contact/contact.module').then(il=>il.ContactModule)    }
+
 ];
 @NgModule({
   imports: [
