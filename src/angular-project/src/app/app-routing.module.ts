@@ -1,3 +1,5 @@
+import { BrowserModule } from '@angular/platform-browser';
+import { CommonModule } from '@angular/common';
 import { ContactComponent } from './blog/contact/contact.component';
 import { RegisterComponent } from './blog/register/register.component';
 import { LoginComponent } from './account/login/login.component';
@@ -39,6 +41,7 @@ const routes: Routes = [
       routes,
       { enableTracing: true } // <-- debugging purposes only
     ),
+    CommonModule,BrowserModule
   ],
   exports: [RouterModule],
 })

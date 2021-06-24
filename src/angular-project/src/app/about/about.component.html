@@ -6,6 +6,30 @@
 <div class="container">
   <div class="row">
 
+    <h2>DataTables</h2>
+<table class="table table-striped table-bordered table-sm row-border hover" id="datatableexample">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Name</th>
+      <th>Surname</th>
+      <th>Email</th>
+      <th>Şifre</th>
+
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let item of data" >
+     
+      <td>{{item.registerId}}</td>
+      <td>{{item.registerName}}</td>
+      <td>{{item.registerSurname}}</td>
+      <td>{{item.registerEmail}}</td>
+      <td>{{item.registerPassword}}</td>
+    </tr>
+
+  </tbody>
+</table>
     <br /><br /><br />
     <button class="btn btn-primary" (click)="toascrShowSuccess()"> <i class="fa fa-500px mr-2"></i>toAscr
       Success</button>

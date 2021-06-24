@@ -1,3 +1,4 @@
+import { RegisterService } from './../services/register/register.service';
 import { Component, OnInit } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { HttpClient } from '@angular/common/http';
@@ -8,12 +9,9 @@ declare let jQuery: any; //jQuery
 @Component({
   selector: 'app-about',
   templateUrl: './about.component.html',
-  styleUrls: ['./about.component.css']
+  styleUrls: ['./about.component.css'],
 })
 export class AboutComponent implements OnInit {
-
-
-
   isLoading: boolean = false;
   //downloading spinner
   //downloadingSpinner(){}
@@ -34,6 +32,7 @@ export class AboutComponent implements OnInit {
     $('#jQuery_h1').css("color","red")
   });
   */
+ 
   }
 
   //jQuery Click
@@ -57,8 +56,26 @@ export class AboutComponent implements OnInit {
 
   //datatables
   data: any;
-  constructor(private http: HttpClient, private toastr: ToastrService) {
+  constructor(
+    private http: HttpClient,
+    private toastr: ToastrService,
+    private registerService: RegisterService
+  ) {
+    this.registerService.getRegisterAllList().subscribe((responseGet) => {
+      // console.log(responseGet);
+      this.data = responseGet;
+      console.log(this.data);
+      setTimeout(() => {
+        $('#datatableexample').DataTable({
+          pagingType: 'full_numbers',
+          pageLength: 5,
+          processing: true,
+          lengthMenu: [5, 10, 25],
+        });
+      }, 1);
+    });
     //get request from web api
+    /*
     this.http.get('https://www.testjsonapi.com/users/').subscribe(
       (data) => {
         this.data = data;
@@ -73,6 +90,7 @@ export class AboutComponent implements OnInit {
       },
       (error) => console.error(error)
     );
-  }
 
+*/
+  }
 }

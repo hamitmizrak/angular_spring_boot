@@ -16,6 +16,7 @@ import { AboutComponent } from './about/about.component';
 import { LoginComponent } from './account/login/login.component';
 import { RegisterComponent } from './account/register/register.component';
 
+import { CommonModule } from '@angular/common';
 @NgModule({
   declarations: [
     AppComponent,
@@ -27,10 +28,13 @@ import { RegisterComponent } from './account/register/register.component';
   ],
   imports: [
     BrowserModule,
+    CommonModule, //ngIf ngFor için
     AppRoutingModule, //routing
     DataTablesModule, //datatables
     HttpClientModule, //Http
+
     BrowserAnimationsModule, // required animations module
+
     ToastrModule.forRoot({
       timeOut: 3000,
       progressBar: true,
