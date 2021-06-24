@@ -2,7 +2,6 @@ import { Observable } from 'rxjs';
 import { ApisService } from './../apis.service';
 import { Injectable } from '@angular/core';
 import { map } from 'rxjs/operators';
-
 declare let alertify: any;
 
 @Injectable({

@@ -17,6 +17,7 @@ import { LoginComponent } from './account/login/login.component';
 import { RegisterComponent } from './account/register/register.component';
 
 import { CommonModule } from '@angular/common';
+import { ProductComponent } from './product/product.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -25,6 +26,7 @@ import { CommonModule } from '@angular/common';
     AboutComponent,
     LoginComponent,
     RegisterComponent,
+    ProductComponent,
   ],
   imports: [
     BrowserModule,
@@ -32,7 +34,6 @@ import { CommonModule } from '@angular/common';
     AppRoutingModule, //routing
     DataTablesModule, //datatables
     HttpClientModule, //Http
-
     BrowserAnimationsModule, // required animations module
 
     ToastrModule.forRoot({

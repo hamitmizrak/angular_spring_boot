@@ -1,3 +1,4 @@
+import { ProductComponent } from './product/product.component';
 import { BrowserModule } from '@angular/platform-browser';
 import { CommonModule } from '@angular/common';
 import { ContactComponent } from './blog/contact/contact.component';
@@ -13,6 +14,7 @@ const routes: Routes = [
   { path: 'anadizin', component: AnadizinComponent },
   { path: '', redirectTo: 'anadizin', pathMatch: 'full' },
   { path: 'about', component: AboutComponent },
+  { path: 'urun', component: ProductComponent },
   //{ path: '**', component: PagenotfoundComponent },
   {
     path: 'create',
