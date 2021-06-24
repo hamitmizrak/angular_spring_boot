@@ -18,6 +18,8 @@ import { RegisterComponent } from './account/register/register.component';
 
 import { CommonModule } from '@angular/common';
 import { ProductComponent } from './product/product.component';
+
+import { ModalModule } from 'ngx-bootstrap/modal'; //bootstrap modal
 @NgModule({
   declarations: [
     AppComponent,
@@ -34,7 +36,8 @@ import { ProductComponent } from './product/product.component';
     AppRoutingModule, //routing
     DataTablesModule, //datatables
     HttpClientModule, //Http
-    BrowserAnimationsModule, // required animations module
+    ModalModule.forRoot(), //Bootstrap modal
+    BrowserAnimationsModule, // required animations module,
 
     ToastrModule.forRoot({
       timeOut: 3000,

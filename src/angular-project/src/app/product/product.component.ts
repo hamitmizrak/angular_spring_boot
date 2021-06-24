@@ -1,7 +1,9 @@
 import { RegisterService } from './../services/register/register.service';
 import { ToastrService } from 'ngx-toastr';
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, TemplateRef } from '@angular/core';
+
+import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 
 @Component({
   selector: 'app-product',
@@ -9,12 +11,15 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./product.component.css'],
 })
 export class ProductComponent implements OnInit {
+  //bootstrap modal
+
   //datatables
   data: any;
   constructor(
     private http: HttpClient,
     private toastr: ToastrService,
-    private registerService: RegisterService
+    private registerService: RegisterService,
+    private modalService: BsModalService
   ) {
     this.registerService.getRegisterAllList().subscribe((responseGet) => {
       // console.log(responseGet);
@@ -35,5 +40,9 @@ export class ProductComponent implements OnInit {
     });
   }
 
+  modalRef: BsModalRef;
+  openModal(template: TemplateRef<any>) {
+    this.modalRef = this.modalService.show(template);
+  }
   ngOnInit(): void {}
 }
