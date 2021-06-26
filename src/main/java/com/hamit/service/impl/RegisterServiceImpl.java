@@ -51,7 +51,6 @@ public class RegisterServiceImpl implements RegisterService {
 		// entityList.forEach(entity -> dtoList.add(modelMapper.map(entity,
 		// RegisterDto.class)));
 		log.info(RegisterDto.class + " listelendi");
-		
 		return dtoList;
 	}
 	
@@ -62,7 +61,6 @@ public class RegisterServiceImpl implements RegisterService {
 		RegisterEntity entity = modelMapper.map(dto, RegisterEntity.class);
 		registerRepository.save(entity);
 		log.info(RegisterDto.class + " eklendi");
-		
 		return modelMapper.map(entity, RegisterDto.class);
 	}
 	

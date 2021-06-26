@@ -1,3 +1,5 @@
+import { NgForm } from '@angular/forms';
+import { Product } from './../../product/Product';
 import { Observable } from 'rxjs';
 import { ApisService } from './../apis.service';
 import { Injectable } from '@angular/core';
@@ -10,15 +12,32 @@ declare let alertify: any;
 export class RegisterService {
   constructor(private apisService: ApisService) {}
 
-  private lOCAL_PATH = 'register/get/list';
+  private lOCAL_PATH = 'register/';
+
+  //GET/id
+  //localhost:9293/api/register/get/14
+  getRegisterDetails(id: number): Observable<any> {
+    return this.apisService.getDetails(this.lOCAL_PATH + 'get/' + id).pipe(
+      map((responseGetId) => {
+        if (responseGetId) {
+          //alertify.success(responseGet + ' ');
+          return responseGetId;
+        } else {
+          alertify.error(responseGetId + ' ');
+          console.log(responseGetId + '');
+          return {};
+        }
+      })
+    );
+  }
 
   //GET
   //http://localhost:9293/api/register/get/list
   getRegisterAllList(): Observable<any> {
-    return this.apisService.getAllList(this.lOCAL_PATH).pipe(
+    return this.apisService.getAllList(this.lOCAL_PATH + 'get/list').pipe(
       map((responseGet) => {
         if (responseGet) {
-          alertify.success(responseGet + ' ');
+          //alertify.success(responseGet + ' ');
           return responseGet;
         } else {
           alertify.error(responseGet + ' ');
@@ -30,8 +49,9 @@ export class RegisterService {
   }
 
   //DELETE
-  getRegisterDelete(): Observable<any> {
-    return this.apisService.getDelete(this.lOCAL_PATH).pipe(
+  //localhost:9293/api/register/delete/13
+  getRegisterDelete(id: number): Observable<any> {
+    return this.apisService.getDelete(this.lOCAL_PATH + 'delete/' + id).pipe(
       map((responseDelete) => {
         if (responseDelete) {
           alertify.success(responseDelete + ' ');
@@ -46,11 +66,13 @@ export class RegisterService {
   }
 
   //POST ==>insert
-  getRegisterPost(): Observable<any> {
-    return this.apisService.getPost(this.lOCAL_PATH).pipe(
+  //localhost:9293/api/register/post
+  //veri null oluyor.
+  getRegisterPost(form: NgForm): Observable<any> {
+    return this.apisService.getPost(this.lOCAL_PATH + 'post').pipe(
       map((responsePost) => {
         if (responsePost) {
-          alertify.success(responsePost + ' ');
+          alertify.success(form.value + ' ');
           return responsePost;
         } else {
           alertify.error(responsePost + ' ');

@@ -5,6 +5,7 @@ import { Injectable } from '@angular/core';
 import { catchError } from 'rxjs/operators';
 
 import { Observable, of } from 'rxjs';
+import { stringify } from '@angular/compiler/src/util';
 
 @Injectable({
   providedIn: 'root',
@@ -26,9 +27,18 @@ export class ApisService {
   //CRUD
 
   //http://localhost:9293/api/register/   get/list
-
   //GetList
   getAllList(
+    path: string,
+    params: HttpParams = new HttpParams()
+  ): Observable<any> {
+    return this.http
+      .get(environment.CONFIG_URL_PATH + path, { params })
+      .pipe(catchError(this.errorCatchFunction));
+  }
+
+
+  getDetails(
     path: string,
     params: HttpParams = new HttpParams()
   ): Observable<any> {
@@ -52,14 +62,20 @@ export class ApisService {
     path: string,
     params: HttpParams = new HttpParams()
   ): Observable<any> {
-    return this.http
-      .post(
-        environment.CONFIG_URL_PATH + path,
-        JSON.stringify(params),
-        this.httpConfigs
-      )
-      .pipe(catchError(this.errorCatchFunction));
+    return (
+      this.http
+        //JSON.stringify(params),
+        //params,
+        //stringify(params),
+        .post(
+          environment.CONFIG_URL_PATH + path,
+          JSON.stringify(params),
+          this.httpConfigs
+        )
+        .pipe(catchError(this.errorCatchFunction))
+    );
   }
+
   //put  ==> Header olmak zorunda
   getPut(path: string, params: HttpParams = new HttpParams()): Observable<any> {
     return this.http
@@ -70,6 +86,8 @@ export class ApisService {
       )
       .pipe(catchError(this.errorCatchFunction));
   }
+
+ 
 
   //genel hataların handling yapildigi yer
   private errorCatchFunction(hata: any) {

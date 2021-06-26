@@ -1,19 +1,67 @@
-
-
-
-
-
- <br><br>
- <button type="button" class="btn btn-primary" (click)="openModal(template)">Oluştur</button>
+<br><br>
+<!-- CREATE-->
+<button type="button" class="btn btn-primary" (click)="openModal(template)">Olustur</button>
 <ng-template #template>
   <div class="modal-header">
-    <h4 class="modal-title pull-left">Product Oluştur</h4>
+    <h4 class="modal-title pull-left">Product Olustur</h4>
     <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
   <div class="modal-body">
-    This is a modal.
+
+
+    <form #productForm="ngForm" (ngSubmit)="productAddForm(productForm)">
+      <div class="form-group mb-2">
+        <input type="text" class="form-control" placeholder="Adiniz .." name="registerName" id="registerName" required
+          autofocus #registerName="ngModel" ngModel />
+        <small *ngIf="registerName.invalid&&registerName.dirty" class="form-text text-danger" style="opacity: .8;">
+          {{requiredName}}
+        </small>
+      </div>
+      <div class="form-group mb-2">
+        <input type="text" class="form-control" placeholder="Soyadiniz .." name="registerSurname" id="registerSurname"
+          required #registerSurname="ngModel" ngModel />
+        <small *ngIf="registerSurname.invalid&&registerSurname.dirty" class="form-text text-danger"
+          style="opacity: .8;">
+          {{requiredSurname}}
+        </small>
+      </div>
+      <div class="form-group mb-2">
+        <input type="email" class="form-control" placeholder="Email adres .." name="registerEmail" id="registerEmail"
+          required #registerEmail="ngModel" ngModel />
+        <small *ngIf="registerEmail.invalid&&registerEmail.dirty" class="form-text text-danger" style="opacity: .8;">
+          {{requiredEmail}}
+        </small>
+      </div>
+
+      <div class="form-group mb-2">
+        <input type="password" class="form-control" placeholder="Password adres .." name="registerPassword"
+          id="registerPassword" required #registerPassword="ngModel" ngModel />
+        <small *ngIf="registerPassword.invalid&&registerPassword.dirty" class="form-text text-danger"
+          style="opacity: .8;">
+          {{requiredPassword}}
+        </small>
+      </div>
+
+      <button type="reset" class="btn btn-danger btn-lg" style="margin-right:.5%">Temizle</button>
+      <button [disabled]="productForm.invalid" type="submit" class="btn btn-primary btn-lg">Gonder</button>
+    </form>
+  </div>
+</ng-template>
+
+
+<!--DETAILS-->
+
+<ng-template #details>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">Product Olustur</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    detail
   </div>
 </ng-template>
 
@@ -26,23 +74,42 @@
       <th>Name</th>
       <th>Surname</th>
       <th>Email</th>
-      <th>Şifre</th>
+      <th>Sifre</th>
       <th>Silmek</th>
-      <th>Güncellemek</th>
+      <th>Guncellemek</th>
+      <th>Detay</th>
+      <th>Detay2</th>
 
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let item of data" >
-     
+    <tr *ngFor="let item of data">
+
       <td>{{item.registerId}}</td>
       <td>{{item.registerName}}</td>
       <td>{{item.registerSurname}}</td>
       <td>{{item.registerEmail}}</td>
       <td>{{item.registerPassword}}</td>
-      <td><button class="btn btn-danger">Delete</button></td>
+
+      <td><button class="btn btn-danger" (click)="confirm(item.registerId)" pButton icon="pi pi-check"
+          label="Delete"></button></td>
+
       <td><button class="btn btn-info">Update</button></td>
+      <td><button class="btn btn-warning" pButton icon="pi pi-check" (click)="openModal(details)"
+          label="Detay"></button>
+      </td>
+      <!-- 
+ <td><button class="btn btn-warning" (click)="details(item.registerId)" pButton icon="pi pi-check"
+          label="Detay"></button></td>
+
+-->
+
+
+
+
     </tr>
 
   </tbody>
+  <!-- Silmek iÃ§in confirm-->
+  <p-confirmDialog header="Confirmation" icon="pi pi-exclamation-triangle"></p-confirmDialog>
 </table>
