@@ -2,7 +2,9 @@ import { ProductComponent } from './product/product.component';
 import { BrowserModule } from '@angular/platform-browser';
 import { CommonModule } from '@angular/common';
 import { ContactComponent } from './blog/contact/contact.component';
-import { RegisterComponent } from './blog/register/register.component';
+//import { RegisterComponent } from './blog/register/register.component';
+//jwt
+import { RegisterComponent } from './jwt/register/register.component';
 import { LoginComponent } from './account/login/login.component';
 import { AboutComponent } from './about/about.component';
 //import { PagenotfoundComponent } from './pagenotfound/pagenotfound.component';
@@ -32,6 +34,14 @@ const routes: Routes = [
   },
 
   {
+    path: 'jwt',
+    children: [
+      { path: 'jwtRegister', component: RegisterComponent },
+      { path: 'register', component: RegisterComponent },
+    ],
+  },
+
+  {
     path: 'iletisim',
     loadChildren: () =>
       import('./blog/contact/contact.module').then((il) => il.ContactModule),
@@ -43,7 +53,8 @@ const routes: Routes = [
       routes,
       { enableTracing: true } // <-- debugging purposes only
     ),
-    CommonModule,BrowserModule
+    CommonModule,
+    BrowserModule,
   ],
   exports: [RouterModule],
 })
