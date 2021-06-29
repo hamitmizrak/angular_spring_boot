@@ -8,4 +8,5 @@ import com.hamit.entity.LoginEntity;
 @Repository
 public interface LoginRepository extends JpaRepository<LoginEntity, Integer> {
 	
+	LoginEntity findByLoginUserName(String username);
 }
