@@ -11,9 +11,10 @@ import javax.persistence.TemporalType;
 import lombok.Getter;
 import lombok.Setter;
 
+@Getter // lombok
+@Setter // lombok
+
 @MappedSuperclass
-@Getter
-@Setter
 public abstract class BaseEntity implements Serializable {
 	private static final long serialVersionUID = -7461083849269769226L;
 	
