@@ -24,7 +24,7 @@ import lombok.NonNull;
 
 // Entity
 @Entity
-@Table(name = "login_entity")
+@Table(name = "login")
 public class LoginEntity extends BaseEntity implements Serializable {
 	private static final long serialVersionUID = -5873084054081369057L;
 	
