@@ -11,6 +11,7 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.hamit.repository.LoginRepository;
@@ -18,7 +19,6 @@ import com.hamit.repository.LoginRepository;
 import lombok.extern.java.Log;
 
 @Log
-
 @Service
 public class CustomDetailsService implements UserDetailsService {
 	
@@ -28,9 +28,13 @@ public class CustomDetailsService implements UserDetailsService {
 	private Map<String, String> mapUser = new HashMap<String, String>();
 	// private String userName,userPassword;
 	
+	// Şifreleyerek gönderelim.
+	@Autowired
+	BCryptPasswordEncoder bCryptPasswordEncoder;
+	
 	@PostConstruct
 	public void init() {
-		mapUser.put("root", "root");
+		mapUser.put("root", bCryptPasswordEncoder.encode("root"));
 		// userName="root"; userPassword="root";
 	}
 	
@@ -48,7 +52,7 @@ public class CustomDetailsService implements UserDetailsService {
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		
 		if (mapUser.containsKey(username)) {
-			return new User(username, mapUser.get("username"), new ArrayList<>());
+			return new User(username, mapUser.get(username), new ArrayList<>());
 		}
 		
 		log.warning(username + " ");
