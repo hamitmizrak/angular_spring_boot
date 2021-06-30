@@ -3,6 +3,8 @@ package com.hamit;
 import org.modelmapper.ModelMapper;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.context.annotation.Bean;
 
 // @SpringBootApplication(scanBasePackages = { "com.hamit.service",
@@ -11,7 +13,14 @@ import org.springframework.context.annotation.Bean;
 // })
 
 @SpringBootApplication
-public class AngularSpringBootProjectApplication {
+public class AngularSpringBootProjectApplication extends SpringBootServletInitializer {
+	
+	// deployment icin eklendi
+	@Override
+	protected SpringApplicationBuilder configure(SpringApplicationBuilder builder) {
+		// TODO Auto-generated method stub
+		return builder.sources(AngularSpringBootProjectApplication.class);
+	}
 	
 	// psvm
 	public static void main(String[] args) {
