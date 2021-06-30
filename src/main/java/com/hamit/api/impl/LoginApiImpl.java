@@ -5,6 +5,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.hamit.api.LoginApi;
 import com.hamit.dto.LoginDto;
+import com.hamit.security.TokenManagerImpl;
 import com.hamit.service.impl.LoginServiceImpl;
 
 import io.swagger.annotations.Api;
@@ -102,6 +105,23 @@ public class LoginApiImpl implements LoginApi {
 	public ResponseEntity<LoginDto> getPost(@ModelAttribute LoginDto loginDto) {
 		log.info(LoginDto.class + " Eklendi");
 		return ResponseEntity.ok(loginServiceImpl.getPost(loginDto));
+	}
+	
+	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	// JWT
+	@Autowired
+	private TokenManagerImpl tokenManagerImpl;
+	
+	@Autowired
+	private AuthenticationManager authenticationManager;
+	
+	// localhost:9293/api/login/jwt
+	@PostMapping("/jwt")
+	public ResponseEntity<String> getJwt(@ModelAttribute LoginDto loginDto) {
+		authenticationManager.authenticate(
+				new UsernamePasswordAuthenticationToken(loginDto.getLoginUserName(), loginDto.getLoginPassword()));
+		log.info(LoginDto.class + " Jwt eklendi");
+		return ResponseEntity.ok(tokenManagerImpl.generateToken(loginDto.getLoginUserName()));
 	}
 	
 }
