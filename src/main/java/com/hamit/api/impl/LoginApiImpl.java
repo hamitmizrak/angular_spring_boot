@@ -117,7 +117,7 @@ public class LoginApiImpl implements LoginApi {
 	
 	// localhost:9293/api/login/jwt
 	@PostMapping("/jwt")
-	public ResponseEntity<String> getJwt(@ModelAttribute LoginDto loginDto) {
+	public ResponseEntity<String> getJwt(@ModelAttribute LoginDto loginDto) { // @RequestBody veya @ModelAttribute
 		authenticationManager.authenticate(
 				new UsernamePasswordAuthenticationToken(loginDto.getLoginUserName(), loginDto.getLoginPassword()));
 		log.info(LoginDto.class + " Jwt eklendi");

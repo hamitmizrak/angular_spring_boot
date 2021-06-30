@@ -1,7 +1,10 @@
 package com.hamit.security;
 
+import org.springframework.stereotype.Service;
+
 import io.jsonwebtoken.Claims;
 
+@Service
 public interface TokenManager {
 	
 	// token olusturmak

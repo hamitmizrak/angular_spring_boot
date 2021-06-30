@@ -3,12 +3,15 @@ package com.hamit.security;
 import java.security.Key;
 import java.util.Date;
 
+import org.springframework.stereotype.Service;
+
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
 import lombok.Data;
 
 // lombok
 @Data
+@Service
 public class CommonSecurityValue {
 	
 	// token ne kadar yasayacak
