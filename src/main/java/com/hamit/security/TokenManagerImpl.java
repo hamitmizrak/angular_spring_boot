@@ -20,7 +20,7 @@ public class TokenManagerImpl implements TokenManager {
 	CommonSecurityValue common = new CommonSecurityValue();
 	
 	private final Date iat = common.getNowDateCurrentTimeMillis(); // simdiki zamanı alsın
-	private final Date exp = common.getExpiredAt(); // simdiki zamanı alsın
+	private final Date exp = common.getExpiredAt(); // simdiki zamana + ekleme(1gun)
 	
 	// Token create
 	@SuppressWarnings("deprecation")
