@@ -6,11 +6,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jwts;
 // import io.jsonwebtoken.Jwts;
 // import io.jsonwebtoken.SignatureAlgorithm;
 // import io.jsonwebtoken.security.Keys;
 // import java.security.Key;
-import io.jsonwebtoken.Jwts;
 
 // her yerde kullanmak icin servise yapalım
 // final yapmazsak milisaniye cinsinden kaynaklanan sorunu yasayabiliriz.
@@ -26,14 +26,15 @@ public class TokenManagerImpl implements TokenManager {
 	// Token create
 	@Override
 	public String generateToken(String username) {
-		return Jwts.builder().setSubject(username).setIssuedAt(iat).setExpiration(exp).signWith(common.getKey())
-				.compact();
+		return Jwts.builder().setSubject(username).setIssuedAt(common.getNowDateCurrentTimeMillis()).setExpiration(exp)
+				.signWith(common.getKey()).compact();
 	}
 	
 	@Override
 	public boolean tokenValidate(String token) {
-		if (getUserFromToken(token) != null && isExpired(token))
+		if (getUserFromToken(token) != null && isExpired(token)) {
 			return true;
+		}
 		return false;
 	}
 	

@@ -9,10 +9,10 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+import com.hamit.security.CustomDetailsService;
 import com.hamit.security.JwtTokenFilter;
 
 @Configuration
@@ -21,41 +21,38 @@ import com.hamit.security.JwtTokenFilter;
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	
 	@Autowired
-	private UserDetailsService userDetailsService;
+	private CustomDetailsService customDetailsService;
 	
 	@Autowired
 	private JwtTokenFilter jwtTokenFilter;
 	
+	@Override
+	@Bean
+	public AuthenticationManager authenticationManagerBean() throws Exception {
+		return super.authenticationManagerBean();
+	}
+	
 	@Autowired
 	public void configureBCryptPasswordEncoder(AuthenticationManagerBuilder authenticationManagerBuilder)
 			throws Exception {
-		authenticationManagerBuilder.userDetailsService(userDetailsService)
-				.passwordEncoder(bCryptPasswordEncoderMethod());
+		authenticationManagerBuilder.userDetailsService(customDetailsService).passwordEncoder(passwordEncoder());
 	}
 	
 	@Bean
-	public BCryptPasswordEncoder bCryptPasswordEncoderMethod() {
+	public BCryptPasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();
 	}
 	
 	@Override
-	@Bean
-	protected AuthenticationManager authenticationManager() throws Exception {
-		return super.authenticationManager();
-	}
-	
-	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http.csrf().disable().authorizeRequests().antMatchers("/login", "/register").permitAll().anyRequest()
-				.authenticated();
+		http.cors().and().csrf().disable().authorizeRequests().antMatchers("/api/**").authenticated();
 		http.addFilterBefore(jwtTokenFilter, UsernamePasswordAuthenticationFilter.class);
 	}
 	
 	// @Override
 	// protected void configure(AuthenticationManagerBuilder auth) throws Exception
 	// {
-	// // TODO Auto-generated method stub
-	// super.configure(auth);
+	// auth.userDetailsService(customDetailsService);
 	// }
 	
 	// @Override

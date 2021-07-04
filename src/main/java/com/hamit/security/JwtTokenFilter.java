@@ -28,13 +28,13 @@ public class JwtTokenFilter extends OncePerRequestFilter {
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
 			throws ServletException, IOException {
 		
-		final String autHeader = request.getHeader("Authorization");
+		final String autHeader = request.getHeader(CommonSecurityValue.HEADER);
 		String username = null;
 		String token = null;
 		
 		// 1-)
 		// autHeader kontrolunu saglamak ve tokenve username almak
-		if (autHeader != null && autHeader.contains("Bearer")) {
+		if (autHeader != null && autHeader.contains(CommonSecurityValue.BEARER)) {
 			token = autHeader.substring(7); // token'i Headerdan almak icin
 			
 			try {

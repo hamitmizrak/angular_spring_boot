@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Index;
 import javax.persistence.Table;
 
 import lombok.AllArgsConstructor;
@@ -24,7 +25,8 @@ import lombok.NonNull;
 
 // Entity
 @Entity
-@Table(name = "login")
+@Table(name = "login", indexes = {
+		@Index(name = "idx_loginEntity", columnList = "login_email_address,login_user_name") })
 public class LoginEntity extends BaseEntity implements Serializable {
 	private static final long serialVersionUID = -5873084054081369057L;
 	
@@ -41,5 +43,7 @@ public class LoginEntity extends BaseEntity implements Serializable {
 	
 	@Column(name = "login_user_password", unique = true, length = 450)
 	private String loginPassword;
+	
+	private String role;
 	
 }

@@ -14,8 +14,14 @@ import lombok.Data;
 @Service
 public class CommonSecurityValue {
 	
+	// header
+	public static final String HEADER = "Authorization";
+	
+	// bearer
+	public static final String BEARER = "Bearer";
+	
 	// token ne kadar yasayacak
-	private final long expiredAt = 24 * 60 * 60 * 1000;
+	private final long expiredAt = 24 * 60 * 60 * 1000; // gün sakalanacak
 	
 	// SecretKey
 	private final String secretKey = "HamitMizrak";
